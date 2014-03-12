@@ -6,7 +6,6 @@
 .rigging
 .tmp
 
-
 ########################
 # node.js / npm
 ########################
@@ -22,11 +21,8 @@ lib-cov
 pids
 logs
 results
-
 node_modules
-
 npm-debug.log
-
 
 ########################
 # misc / editors
@@ -37,7 +33,6 @@ npm-debug.log
 .netbeans
 nbproject
 .idea
-
 
 ########################
 # local config
