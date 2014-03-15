@@ -10,17 +10,23 @@ module.exports =
     @interval = 1
     @label = options.label || 'Inbox'
     @username = options.username
-    @password = options.password
+    @clientId = sails.config.gmail.clientId
+    @clientSecret = sails.config.gmail.clientSecret
     @client = @initClient() if not @client
     _.bindAll(@, 'doFetch')
 
   initClient: ->
-    _client = inbox.createConnection false, 'imap.gmail.com', {
+    _client = inbox.createConnection(false, 'imap.gmail.com',
       secureConnection: true
       auth:
-        user: @username
-        pass: @password
-    }
+        XOAuth2:
+          user: @username
+          clientId: @clientId
+          clientSecret: @clientSecret
+          refreshToken: ''
+          accessToken: ''
+          timeout: 3600
+    )
     _client.lastfetch = 0
     _client.connect()
     _client.on 'connect', () =>

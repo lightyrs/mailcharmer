@@ -1,0 +1,18 @@
+body {
+  padding-top: 60px;
+}
+
+h1.headline {
+  margin-bottom: 40px;
+}
+
+#brand form {
+  padding-top: 20px;
+}
+
+#brand form .form-group {
+  width: 340px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
