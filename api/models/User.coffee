@@ -1,12 +1,9 @@
 module.exports =
 
   attributes:
-
-    email:
-      type: 'email'
-      unique: true
-      required: true
-
-    refreshToken:
-      type: 'text'
-      required: false
+    provider: 'STRING'
+    uid: 'INTEGER'
+    name: 'STRING'
+    email: 'STRING'
+    fistname: 'STRING'
+    lastname: 'STRING'

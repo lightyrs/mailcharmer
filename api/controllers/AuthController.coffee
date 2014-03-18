@@ -1,29 +1,34 @@
-passport = require('passport')
+passport = require 'passport'
 
 module.exports =
 
-  # http://passportjs.org/guide/google/
-
-  login: (req, res) ->
-    res.view()
-    return
-
-  process: (req, res) ->
-    passport.authenticate("local", (err, user, info) ->
-      if (err) or (not user)
-        return res.send(message: "login failed")
-        res.send err
+  google: (req, res) ->
+    passport.authenticate("google",
+      failureRedirect: "/login"
+      scope: [
+        "https://www.googleapis.com/auth/plus.login"
+        "https://www.googleapis.com/auth/userinfo.profile"
+        "https://www.googleapis.com/auth/userinfo.email"
+      ]
+    , (err, user) ->
       req.logIn user, (err) ->
-        res.send err  if err
-        res.send message: "login successful"
+        if err
+          console.log err
+          res.view "500"
+          return
+        res.redirect "/"
+        return
+
       return
     ) req, res
     return
 
+  index: (req, res) ->
+    res.view()
+
   logout: (req, res) ->
     req.logout()
-    res.send "logout successful"
-    return
+    res.redirect '/'
 
 module.exports.blueprints =
 
