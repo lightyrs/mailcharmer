@@ -1,15 +1,17 @@
 var passport = require('passport'),
-    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+    dotenv = require('dotenv');
 
+dotenv.load();
 
 var verifyHandler = function (token, tokenSecret, profile, done) {
 
   process.nextTick(function () {
-    console.log('howdy');
+
     User.findOne({
         or: [
-            {uid: parseInt(profile.id)},
-            {uid: profile.id}
+          { uid: parseInt(profile.id) },
+          { uid: profile.id }
         ]
       }
     ).done(function (err, user) {
@@ -59,11 +61,13 @@ passport.deserializeUser(function (uid, done) {
 module.exports = {
 
   express: {
+
     customMiddleware: function (app) {
+
       passport.use(new GoogleStrategy({
-        clientID: '532918952879.apps.googleusercontent.com',
-        clientSecret: 'OQaNJZ35ryYuQtZMxsLHn844',
-        callbackURL: 'http://localhost:1337/auth/google/return/'
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL
       }, verifyHandler));
 
       app.use(passport.initialize());
